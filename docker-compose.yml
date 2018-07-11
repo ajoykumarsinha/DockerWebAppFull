@@ -1,0 +1,79 @@
+version: '3'
+
+networks:
+  devnetwork:
+    driver: bridge
+
+services:
+ status-processing-service:
+  build: 
+    context: ../DSS-Coeus-Status-Processing-Service
+  networks:
+    - devnetwork
+ event-generation-service:
+  build: 
+    context: ../DSS-Coeus-Event-Generation-Service
+  networks:
+    - devnetwork
+ alert-notification-service:
+  build: 
+    context: ../DSS-Coeus-Alert-Notification-Service
+  networks:
+    - devnetwork     
+ metadata-service:
+  build: 
+    context: ../DSS-Coeus-Metadata-Service
+  ports:
+    - "4000:4000"    
+  networks:
+    - devnetwork    
+ device-status-service:
+  build: 
+    context: ../DSS-Coeus-Device-Status-Service
+  ports:
+    - "4001:4000"    
+  networks:
+    - devnetwork         
+ portal:
+  build: 
+    context: ../DSS-Coeus-Portal
+  ports:
+    - "3000:3000"    
+  networks:
+    - devnetwork        
+ rabbitmq:
+  build: 
+    context: ./docker/rabbitmq
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+  networks:
+    - devnetwork     
+  volumes:
+    - /opt/rabbitmq:/var/lib/rabbitmq       
+ openldap:
+  build: 
+    context: ./docker/openldap
+  ports:
+    - "389:389"
+    - "636:636"
+  networks:
+    - devnetwork     
+  volumes:
+    - /var/lib/ldap
+    - /etc/ldap/slapd.d
+    - /container/service/slapd/assets/certs/
+ api-facade:
+  build:
+    context: ./docker/api-facade
+  ports:
+    - "3001:3000"
+  networks:
+    - devnetwork 
+ haproxy:
+  build:
+    context: ./docker/haproxy
+  ports:
+    - "80:80"
+  networks:
+    - devnetwork 
