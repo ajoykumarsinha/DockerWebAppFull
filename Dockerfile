@@ -51,7 +51,7 @@ RUN chgrp -R 0 /opt/tomcat && chmod -R g=u /opt/tomcat
 RUN chmod 777 -R /opt/tomcat/
 RUN chmod 777 /opt/tomcat/conf/server.xml
 
-EXPOSE 8181
+EXPOSE 8080
 
 RUN chmod 777 /opt/tomcat/bin/catalina.sh
 CMD /opt/tomcat/bin/catalina.sh run
