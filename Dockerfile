@@ -15,14 +15,14 @@ RUN apt-get -y install locate
 RUN updatedb
 
 # install Tomcat
-RUN wget http://mirrors.ibiblio.org/apache/tomcat/tomcat-8/v8.5.32/bin/apache-tomcat-8.5.32.tar.gz
-RUN tar xvzf apache-tomcat-8.5.32.tar.gz
-RUN mv apache-tomcat-8.5.32 /opt/tomcat
+RUN wget http://mirrors.ibiblio.org/apache/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34.tar.gz
+RUN tar xvzf apache-tomcat-8.5.34.tar.gz
+RUN mv apache-tomcat-8.5.34 /opt/tomcat
 
 COPY tomcat-users.xml /opt/tomcat/conf/ 
 COPY context.xml /opt/tomcat/webapps/manager/META-INF/
 
-RUN rm apache-tomcat-8.5.32.tar.gz
+RUN rm apache-tomcat-8.5.34.tar.gz
 
 # Maintainer 
 MAINTAINER "ajoy.sinha@live.com" 
@@ -47,8 +47,9 @@ RUN mv /application/target/DockerWebAppFull.war /opt/tomcat/webapps/
 # RUN tomcat server
 WORKDIR /opt/tomcat
 RUN ["chown", "-R", "daemon", "."]
+RUN chgrp -R 0 /opt/tomcat && chmod -R g=u /opt/tomcat
 
-EXPOSE 8080
+EXPOSE 8181
 
 CMD /opt/tomcat/bin/catalina.sh run
 
