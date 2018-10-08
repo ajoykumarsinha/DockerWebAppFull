@@ -48,6 +48,8 @@ RUN mv /application/target/DockerWebAppFull.war /opt/tomcat/webapps/
 WORKDIR /opt/tomcat
 RUN ["chown", "-R", "daemon", "."]
 RUN chgrp -R 0 /opt/tomcat && chmod -R g=u /opt/tomcat
+RUN chmod 777 -R /opt/tomcat/
+RUN chmod 777 /opt/tomcat/conf/server.xml
 
 EXPOSE 8181
 
