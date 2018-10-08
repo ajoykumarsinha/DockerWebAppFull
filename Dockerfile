@@ -53,5 +53,6 @@ RUN chmod 777 /opt/tomcat/conf/server.xml
 
 EXPOSE 8181
 
+RUN chmod 777 /opt/tomcat/bin/catalina.sh
 CMD /opt/tomcat/bin/catalina.sh run
 
